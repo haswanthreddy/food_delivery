@@ -1,11 +1,11 @@
-p "2. Seeding - Delivery Partner"
-
 DeliveryPartner.find_or_create_by(email_address: "delivery_partner@example.com") do |d|
+  p "2. Seeding - Delivery Partner"
+
   d.full_name = "demo delivery partner"
-  u.phone_number = Faker::PhoneNumber.phone_number
-  u.verified = true
-  u.full_address = Faker::Address.full_address
-  u.latitude = Faker::Address.latitude
-  u.longitude = Faker::Address.longitude
-  u.password = "password123"
+  d.phone_number = Faker::PhoneNumber.phone_number
+  d.verified = true
+  d.full_address = Faker::Address.full_address
+  d.latitude = Faker::Address.latitude
+  d.longitude = Faker::Address.longitude
+  d.password = "password123"
 end
