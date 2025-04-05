@@ -72,7 +72,7 @@ RSpec.describe "/api/v1/delivery_partners/sessions", type: :request do
       end
     end
 
-    context "with delivery_partner params" do
+    context "with user params" do
       it "should not authorize" do
         user = create(:user)
 

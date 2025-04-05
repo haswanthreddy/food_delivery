@@ -21,6 +21,7 @@ RSpec.describe "/api/v1/users/sessions", type: :request do
         post api_v1_users_sessions_url, params: valid_params
 
         expect(response).to have_http_status(:ok)
+        expect(response.content_type).to eq("application/json; charset=utf-8")
       end
 
       it "should set cookie" do
@@ -48,6 +49,7 @@ RSpec.describe "/api/v1/users/sessions", type: :request do
         post api_v1_users_sessions_url, params: wrong_email_params
 
         expect(response).to have_http_status(:unauthorized)
+        expect(response.content_type).to eq("application/json; charset=utf-8")
       end
 
       it "should return status unauthorized - with wrong password" do
@@ -77,6 +79,7 @@ RSpec.describe "/api/v1/users/sessions", type: :request do
         post api_v1_users_sessions_url, params: { email_address: delivery_partner.email_address, password: delivery_partner.password }
 
         expect(response).to have_http_status(:unauthorized)
+        expect(response.content_type).to eq("application/json; charset=utf-8")
       end
     end
   end
