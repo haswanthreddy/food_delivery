@@ -8,4 +8,5 @@ DeliveryPartner.find_or_create_by(email_address: "delivery_partner@example.com")
   d.latitude = Faker::Address.latitude
   d.longitude = Faker::Address.longitude
   d.password = "password123"
+  d.city = Faker::Address.city
 end
