@@ -1,5 +1,5 @@
 p "4. Seeding Products"
-establishments = Establishments.all
+establishments = Establishment.all
 
 establishments.each do |establishment|
 

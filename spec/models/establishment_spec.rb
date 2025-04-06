@@ -11,6 +11,7 @@ RSpec.describe Establishment, type: :model do
     it { should have_db_column(:city).of_type(:string).with_options(null: false) }
     it { should have_db_column(:latitude).of_type(:float).with_options(null: false) }
     it { should have_db_column(:longitude).of_type(:float).with_options(null: false) }
+    it { should have_db_column(:rating).of_type(:decimal).with_options(default: 0.0) }
     it { should have_db_column(:phone_number).of_type(:string).with_options(null: false) }
     it { should have_db_column(:created_at).of_type(:datetime).with_options(null: false) }
     it { should have_db_column(:updated_at).of_type(:datetime).with_options(null: false) }
@@ -30,6 +31,7 @@ RSpec.describe Establishment, type: :model do
         expect(establishment).to be_valid
       end
     end
+
     context "with missing attributes" do
       it "validates presence of required attributes" do
         valid_attributes.each do |attribute, value|
@@ -67,6 +69,25 @@ RSpec.describe Establishment, type: :model do
   
         establishment.longitude = 90
         expect(establishment).to be_valid
+      end
+    end
+
+    context "Rating" do
+      it "is valid with a rating between 0 and 5" do
+        establishment = build(:establishment, rating: 4.5)
+        expect(establishment).to be_valid
+      end
+
+      it "is not valid with a rating less than 0" do
+        establishment = build(:establishment, rating: -1)
+        expect(establishment).to_not be_valid
+        expect(establishment.errors[:rating]).to include("must be between 0 and 5")
+      end
+
+      it "is not valid with a rating greater than 5" do
+        establishment = build(:establishment, rating: 5.1)
+        expect(establishment).to_not be_valid
+        expect(establishment.errors[:rating]).to include("must be between 0 and 5")
       end
     end
 
