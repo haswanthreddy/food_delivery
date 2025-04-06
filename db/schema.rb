@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_05_214435) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_06_095533) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -29,17 +29,42 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_05_214435) do
     t.index ["email_address"], name: "index_delivery_partners_on_email_address", unique: true
   end
 
-  create_table "restaurants", force: :cascade do |t|
+  create_table "establishments", force: :cascade do |t|
     t.string "name", null: false
+    t.integer "establishment_type", null: false
     t.string "full_address", null: false
     t.string "city", null: false
     t.float "latitude", null: false
     t.float "longitude", null: false
     t.string "phone_number", null: false
-    t.string "website"
+    t.string "email_address", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_restaurants_on_name", unique: true
+    t.index ["city"], name: "index_establishments_on_city"
+    t.index ["email_address"], name: "index_establishments_on_email_address", unique: true
+    t.index ["name"], name: "index_establishments_on_name", unique: true
+  end
+
+  create_table "inventories", force: :cascade do |t|
+    t.bigint "establishment_id", null: false
+    t.bigint "product_id", null: false
+    t.integer "quantity", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["establishment_id", "product_id"], name: "index_inventories_on_establishment_id_and_product_id", unique: true
+    t.index ["establishment_id"], name: "index_inventories_on_establishment_id"
+    t.index ["product_id"], name: "index_inventories_on_product_id"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.bigint "establishment_id", null: false
+    t.string "name", null: false
+    t.string "description"
+    t.decimal "price", precision: 5, scale: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["establishment_id", "name"], name: "index_products_on_establishment_id_and_name", unique: true
+    t.index ["establishment_id"], name: "index_products_on_establishment_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -65,4 +90,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_05_214435) do
     t.datetime "updated_at", null: false
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
+
+  add_foreign_key "inventories", "establishments"
+  add_foreign_key "inventories", "products"
+  add_foreign_key "products", "establishments"
 end
