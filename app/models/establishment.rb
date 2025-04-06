@@ -26,7 +26,8 @@ class Establishment < ApplicationRecord
   validates :longitude,
     presence: true,
     numericality: { greater_than_or_equal_to: -180, less_than_or_equal_to: 180 }
-
+  
+  validates :rating, inclusion: { in: 0..5, message: "must be between 0 and 5" }
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 end

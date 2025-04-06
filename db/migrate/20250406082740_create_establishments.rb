@@ -9,6 +9,7 @@ class CreateEstablishments < ActiveRecord::Migration[8.0]
       t.float :longitude, null: false
       t.string :phone_number, null: false
       t.string :email_address, null: false
+      t.decimal :rating, default: 0.0, precision: 2, scale: 1
       t.timestamps
     end
 
