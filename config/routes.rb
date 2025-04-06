@@ -18,6 +18,10 @@ Rails.application.routes.draw do
   
       resources :users, only: %i[create show update]
       resources :delivery_partners, only: %i[create show update]
+
+      resources :establishments, only: %i[index show] do
+        resources :products, only: %i[index show]
+      end
     end
   end
 end
