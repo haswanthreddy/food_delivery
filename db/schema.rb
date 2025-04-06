@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_04_191504) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_05_214435) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -19,6 +19,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_04_191504) do
     t.string "phone_number", null: false
     t.boolean "verified", default: false
     t.text "full_address"
+    t.string "city"
     t.float "latitude"
     t.float "longitude"
     t.string "email_address", null: false
@@ -26,6 +27,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_04_191504) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email_address"], name: "index_delivery_partners_on_email_address", unique: true
+  end
+
+  create_table "restaurants", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "full_address", null: false
+    t.string "city", null: false
+    t.float "latitude", null: false
+    t.float "longitude", null: false
+    t.string "phone_number", null: false
+    t.string "website"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_restaurants_on_name", unique: true
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -43,6 +57,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_04_191504) do
     t.string "full_name"
     t.string "phone_number", null: false
     t.string "email_address", null: false
+    t.string "city"
+    t.float "latitude"
+    t.float "longitude"
     t.string "password_digest", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
