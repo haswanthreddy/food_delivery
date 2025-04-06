@@ -47,8 +47,6 @@ RSpec.describe "/api/v1/delivery_partners", type: :request do
       it "renders a forbidden response" do
         get api_v1_delivery_partner_url(id: 0), headers: cookies
 
-        p "json response: #{JSON.parse(response.body)}"
-
         expect(response).to have_http_status(:forbidden)
       end
     end
