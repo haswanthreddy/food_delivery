@@ -123,4 +123,65 @@ RSpec.describe "/api/v1/establishments/:establishment_id/products", type: :reque
       end
     end
   end
+
+  describe "GET /show" do
+    let(:establishment) { create(:establishment) }
+    let(:product) { create(:product, establishment: establishment) }
+
+    context "when establishment and product exist" do
+      it "returns a successful response with JSON content type" do
+        p "product: #{product.inspect} -----------------$$$$$$$$"
+        
+        get api_v1_establishment_product_url(establishment_id: establishment.id, id: product.id)
+
+        expect(response).to have_http_status(:ok)
+        expect(response.content_type).to eq("application/json; charset=utf-8")
+      end
+
+      it "returns the product data" do
+        get api_v1_establishment_product_url(establishment_id: establishment.id, id: product.id)
+
+        json_response = JSON.parse(response.body)
+
+        expect(json_response["data"]["id"]).to eq(product.id)
+        expect(json_response["data"].keys).to include("id", "establishment_id", "name", "description", "price")
+      end
+
+      it "returns the correct response format" do
+        get api_v1_establishment_product_url(establishment_id: establishment.id, id: product.id)
+
+        json_response = JSON.parse(response.body)
+
+        expect(json_response).to include(
+          "code" => 200,
+          "status" => "success",
+          "data" => an_instance_of(Hash)
+        )
+      end
+    end
+
+    context "when establishment does not exist" do
+      it "returns a not found response with error message" do
+        get api_v1_establishment_product_url(establishment_id: -1, id: product.id)
+
+        json_response = JSON.parse(response.body)
+
+        expect(response).to have_http_status(:not_found)
+        expect(response.content_type).to eq("application/json; charset=utf-8")
+        expect(json_response["error"]).to eq("Establishment not found.")
+      end
+    end
+
+    context "when product does not exist" do
+      it "returns a not found response with error message" do
+        get api_v1_establishment_product_url(establishment_id: establishment.id, id: -1)
+
+        json_response = JSON.parse(response.body)
+
+        expect(response).to have_http_status(:not_found)
+        expect(response.content_type).to eq("application/json; charset=utf-8")
+        expect(json_response["error"]).to eq("Product not found.")
+      end
+    end
+  end
 end

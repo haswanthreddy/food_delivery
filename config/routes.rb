@@ -20,7 +20,7 @@ Rails.application.routes.draw do
       resources :delivery_partners, only: %i[create show update]
 
       resources :establishments, only: %i[index show] do
-        resources :products, only: %i[index update]
+        resources :products, only: %i[index show]
       end
     end
   end

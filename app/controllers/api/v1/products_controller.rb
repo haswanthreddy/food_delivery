@@ -1,5 +1,5 @@
 class Api::V1::ProductsController < ApplicationController
-  before_action :set_establishment, only: :index
+  before_action :set_establishment
   before_action :set_product, only: :show
 
   def index
@@ -49,7 +49,7 @@ class Api::V1::ProductsController < ApplicationController
       render json: {
         code: 404,
         status: "failure",
-        message: "Product not found."
+        error: "Product not found."
       }, status: :not_found
     end
   end
