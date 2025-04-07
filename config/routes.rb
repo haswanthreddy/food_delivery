@@ -10,10 +10,16 @@ Rails.application.routes.draw do
     namespace :v1 do
       namespace :users do
         resource :sessions, only: %i[create destroy]
+        resources :orders, only: [:index, :create, :show, :update]
       end
   
       namespace :delivery_partners do
         resource :sessions, only: %i[create destroy]
+        resources :orders, only: [:show, :update] do
+          member do
+            post :accept
+          end
+        end
       end
   
       resources :users, only: %i[create show update]

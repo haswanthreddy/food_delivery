@@ -11,5 +11,11 @@ establishments.each do |establishment|
       description: Faker::Lorem.sentence,
       price: Faker::Commerce.price
     )
+
+    Inventory.create(
+      product: product,
+      establishment: establishment,
+      quantity: Faker::Number.between(from: 10, to: 100),
+    )
   end
 end

@@ -20,6 +20,7 @@ RSpec.describe DeliveryPartner, type: :model do
 
   describe "Associations" do
     it { is_expected.to have_many(:sessions).dependent(:destroy) }
+    it { is_expected.to have_many(:orders) }
   end
 
   describe "Validations" do

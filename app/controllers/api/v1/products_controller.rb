@@ -3,8 +3,8 @@ class Api::V1::ProductsController < ApplicationController
   before_action :set_product, only: :show
 
   def index
-    products = @establishment.products.joins(:inventories)
-                      .where('inventories.quantity > ?', 1)
+    products = @establishment.products.joins(:inventory)
+        .where('inventories.quantity > ?', 1)
                       .order(rating: :desc)
                       .page(params[:page])
                       .per(30)

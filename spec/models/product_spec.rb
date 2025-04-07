@@ -17,7 +17,8 @@ RSpec.describe Product, type: :model do
 
   describe "Associations" do
     it { should belong_to(:establishment) }
-    it { should have_many(:inventories).dependent(:destroy) }
+    it { should have_one(:inventory).dependent(:destroy) }
+    it { should have_many(:orders).dependent(:destroy) }
   end
 
   describe "Validations" do

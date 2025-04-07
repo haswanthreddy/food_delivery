@@ -1,5 +1,6 @@
 EXCEPTIONS = {
   # 400 Bad Request
+  "ActionController::ParameterMissing" => { status: "failure", code: 400, error: "Missing required params." },
   "ActiveRecord::NotNullViolation" => { status: "failure", code: 400, error: "Missing mandatory fields." },
   "ActiveRecord::RecordInvalid" => { status: "failure", code: 400, error: "Invalid request parameters." },
   "BadRequest" => { status: "failure", code: 400, error: "Bad Request: Invalid request parameters." },
