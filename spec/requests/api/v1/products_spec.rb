@@ -130,8 +130,7 @@ RSpec.describe "/api/v1/establishments/:establishment_id/products", type: :reque
 
     context "when establishment and product exist" do
       it "returns a successful response with JSON content type" do
-        p "product: #{product.inspect} -----------------$$$$$$$$"
-        
+
         get api_v1_establishment_product_url(establishment_id: establishment.id, id: product.id)
 
         expect(response).to have_http_status(:ok)

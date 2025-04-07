@@ -26,7 +26,7 @@ class Api::V1::DeliveryPartnersController < ApplicationController
         status: "failure",
         code: 422,
         error: "Signup failed.",
-        errors: delivery_partner.errors.full_messages
+        error: delivery_partner.errors.full_messages
       }, status: :unprocessable_entity
     end
   end

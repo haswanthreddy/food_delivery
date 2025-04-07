@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_06_095533) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_06_230210) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -57,6 +57,24 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_06_095533) do
     t.index ["product_id"], name: "index_inventories_on_product_id"
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "delivery_partner_id"
+    t.bigint "product_id", null: false
+    t.integer "status", default: 0, null: false
+    t.integer "quantity", null: false
+    t.decimal "discount_percentage", precision: 4, scale: 2, default: "0.0"
+    t.decimal "rating", precision: 2, scale: 1, default: "0.0"
+    t.text "review"
+    t.string "coupon_code"
+    t.datetime "delivered_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["delivery_partner_id"], name: "index_orders_on_delivery_partner_id"
+    t.index ["product_id"], name: "index_orders_on_product_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.bigint "establishment_id", null: false
     t.string "name", null: false
@@ -95,5 +113,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_06_095533) do
 
   add_foreign_key "inventories", "establishments"
   add_foreign_key "inventories", "products"
+  add_foreign_key "orders", "products"
+  add_foreign_key "orders", "users"
   add_foreign_key "products", "establishments"
 end
