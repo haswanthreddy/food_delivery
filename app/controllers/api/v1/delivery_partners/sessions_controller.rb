@@ -8,7 +8,7 @@ class Api::V1::DeliveryPartners::SessionsController < ApplicationController
 
     if delivery_partner
       start_new_session_for delivery_partner
-      render json: { status: "success", code: 200, message: "Logged in successfully." }, status: :ok
+      render json: { status: "success", code: 200, message: "Logged in successfully.", sessions: Current.session }, status: :ok
     else
       render json: { status: "failure", code: 401, error: "Invalid email address or password." }, status: :unauthorized
     end

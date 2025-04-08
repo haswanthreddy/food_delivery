@@ -23,7 +23,11 @@ Rails.application.routes.draw do
       end
   
       resources :users, only: %i[create show update]
-      resources :delivery_partners, only: %i[create show update]
+      resources :delivery_partners, only: %i[create show update] do
+        member do
+          post :update_location
+        end
+      end
 
       resources :establishments, only: %i[index show] do
         resources :products, only: %i[index show]

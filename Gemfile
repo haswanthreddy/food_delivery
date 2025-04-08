@@ -20,6 +20,12 @@ gem "solid_cache"
 gem "solid_queue"
 gem "solid_cable"
 
+gem "sqlite3", "~> 2.0", ">= 2.0.2"
+
+gem "dotenv-rails"
+
+gem 'activerecord-postgis-adapter'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 

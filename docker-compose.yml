@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ${DOCKERFILE:-Dockerfile}
+    volumes:
+      - .:/app
+      - bundle_cache:/usr/local/bundle
+    environment:
+      - RAILS_ENV=${RAILS_ENV:-production}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    command: ${APP_COMMAND:-"bundle exec rails server -b 0.0.0.0"}
+
+  db:
+    image: postgres:14-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=food_delivery_${RAILS_ENV:-production}
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
+  bundle_cache:
+
+# Usage:
+# For development:
+# DOCKERFILE=Dockerfile.dev RAILS_ENV=development APP_COMMAND="bundle exec rails server -b 0.0.0.0" docker-compose up
+# For production:
+# docker-compose up
