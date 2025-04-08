@@ -1,24 +1,35 @@
-# README
+## Requirements
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+- postgresql@17
+- rails 8
+- ruby 3.4.1
+- postgis (brew install postgis)
 
-Things you may want to cover:
 
-* Ruby version
+## Setup
 
-* System dependencies
+clone the repo
+install gems
+```
+bundle install
+```
+create db
+```
+rails db:create
+```
+migrations
+```
+rails db:migrate
+```
+solid cache install
+```
+rails solid_cache:install 
+```
+solid queue install
+```
+rails solid_queue:install
+```
 
-* Configuration
+## System Design
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+![alt text](image.png)

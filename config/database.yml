@@ -19,10 +19,27 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
+cache_default: &cache_default
+  adapter: sqlite3
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+
 
 development:
-  <<: *default
-  database: food_delivery_development
+  primary:
+    <<: *default
+    adapter: postgis
+    encoding: unicode
+    postgis_extension: true
+    database: food_delivery_development
+
+  cache:
+    <<: *cache_default
+    database: solid/food_delivery_development_cache.sqlite3
+    migrations_paths: db/cache_migrate
+  
+  queue:
+    <<: *cache_default
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
