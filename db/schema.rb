@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_06_230210) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_08_112835) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+  enable_extension "postgis"
 
   create_table "delivery_partners", force: :cascade do |t|
     t.string "full_name"
@@ -20,12 +21,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_06_230210) do
     t.boolean "verified", default: false
     t.text "full_address"
     t.string "city"
-    t.float "latitude"
-    t.float "longitude"
     t.string "email_address", null: false
     t.string "password_digest", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.geography "coordinates", limit: {srid: 4326, type: "st_point", geographic: true}
+    t.index ["coordinates"], name: "index_delivery_partners_on_coordinates", using: :gist
     t.index ["email_address"], name: "index_delivery_partners_on_email_address", unique: true
   end
 
@@ -34,14 +35,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_06_230210) do
     t.integer "establishment_type", null: false
     t.string "full_address", null: false
     t.string "city", null: false
-    t.float "latitude", null: false
-    t.float "longitude", null: false
     t.string "phone_number", null: false
     t.string "email_address", null: false
     t.decimal "rating", precision: 2, scale: 1, default: "0.0"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.geography "coordinates", limit: {srid: 4326, type: "st_point", geographic: true}
     t.index ["city"], name: "index_establishments_on_city"
+    t.index ["coordinates"], name: "index_establishments_on_coordinates", using: :gist
     t.index ["email_address"], name: "index_establishments_on_email_address", unique: true
     t.index ["name"], name: "index_establishments_on_name", unique: true
   end
